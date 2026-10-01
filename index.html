@@ -3,266 +3,288 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cuestionario de Diagnóstico - Gestión Académica</title>
+  <title>Cuestionario de Diagnóstico - Universidad Tecnológica de Durango</title>
   <link rel="stylesheet" href="diseno.css">
 </head>
 <body>
 
   <div class="wrapper">
-    <!-- Encabezado Principal -->
-    <header class="header-card">
-      <div class="badge-institution">
-        <span>📋 Encuesta de Diagnóstico Institucional</span>
-      </div>
-      <h1>Estudio de Procesos de Control Escolar y Administración de Alumnos</h1>
-      <p>Este cuestionario busca conocer la experiencia actual en la gestión de expedientes, tiempos de trámite y organización de datos en la institución para fundamentar una propuesta de mejora informática.</p>
+    
+    <!-- TARJETA DE AGRADECIMIENTO (Oculta por defecto) -->
+    <div id="thankYouCard" class="thank-you-card" style="display: none;">
+      <div class="success-icon">🎉</div>
+      <h2>¡Gracias por tu participación!</h2>
+      <p>Tus respuestas han sido registradas con éxito en nuestra base de datos. Tu aportación es de gran valor para la fundamentación de este proyecto de investigación.</p>
       
-      <div class="survey-meta">
-        <span>⏱️ Tiempo estimado: 3 a 5 minutos</span>
-        <span>🔒 Respuestas Anónimas</span>
+      <div class="thank-you-actions">
+        <button type="button" class="btn-action btn-secondary" onclick="resetFormulario()">
+          🔄 Contestar otra encuesta
+        </button>
+        <button type="button" class="btn-action btn-primary" onclick="finalizarSesion()">
+          ✅ Finalizar
+        </button>
       </div>
-    </header>
-
-    <!-- Barra de Progreso Flotante -->
-    <div class="progress-container">
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progressBar"></div>
-      </div>
-      <span class="progress-text" id="progressText">0%</span>
     </div>
 
-    <!-- Formulario -->
-    <form class="form-body" id="encuestaForm">
-
-      <!-- SECCIÓN 1 -->
-      <div class="question-section-title">Sección I: Situación Actual de los Trámites</div>
-
-      <div class="question-card">
-        <h3><span class="question-number">1.</span> ¿Cómo consideras que la institución maneja y guarda actualmente la información de los alumnos?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q1" value="Fisico" required><span>En carpetas físicas y archiveros de papel</span></label>
-          <label class="option-item"><input type="radio" name="q1" value="Excel"><span>En archivos de Excel o documentos guardados en la computadora</span></label>
-          <label class="option-item"><input type="radio" name="q1" value="Hibrido"><span>Combinan carpetas físicas con archivos de Excel</span></label>
-          <label class="option-item"><input type="radio" name="q1" value="Desconocido"><span>No sé el método exacto, pero los trámites suelen tardar</span></label>
+    <!-- CONTENIDO PRINCIPAL DE LA ENCUESTA -->
+    <div id="surveyContainer">
+      <!-- Encabezado Principal -->
+      <header class="header-card">
+        <div class="badge-institution">
+          <span>🏛️ Universidad Tecnológica de Durango</span>
         </div>
-      </div>
-
-      <div class="question-card">
-        <h3><span class="question-number">2.</span> ¿Por qué medio sueles solicitar o consultar información sobre trámites escolares?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q2" value="Ventanilla" required><span>Acudiendo directamente a la ventanilla o área de control escolar</span></label>
-          <label class="option-item"><input type="radio" name="q2" value="Correo"><span>Por correo electrónico</span></label>
-          <label class="option-item"><input type="radio" name="q2" value="Mensajeria"><span>Por mensaje o grupos informales</span></label>
+        <h1>Estudio de Procesos de Control Escolar y Administración de Alumnos</h1>
+        <p>Este cuestionario busca conocer la experiencia actual en la gestión de expedientes, tiempos de trámite y organización de datos para fundamentar una propuesta de mejora informática.</p>
+        
+        <div class="survey-meta">
+          <span>⏱️ Tiempo estimado: 3 a 5 minutos</span>
+          <span>🔒 Respuestas Anónimas</span>
         </div>
-      </div>
+      </header>
 
-      <div class="question-card">
-        <h3><span class="question-number">3.</span> En promedio, ¿cuánto tiempo toma obtener una respuesta cuando pides una constancia o consulta de datos?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q3" value="Inmediato" required><span>Al momento (menos de 15 minutos)</span></label>
-          <label class="option-item"><input type="radio" name="q3" value="MismoDia"><span>Unas cuantas horas en el mismo día</span></label>
-          <label class="option-item"><input type="radio" name="q3" value="Dias"><span>De 2 a 5 días</span></label>
-          <label class="option-item"><input type="radio" name="q3" value="Semanas"><span>Más de una semana</span></label>
+      <!-- Barra de Progreso Flotante -->
+      <div class="progress-container">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar"></div>
         </div>
+        <span class="progress-text" id="progressText">0%</span>
       </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">4.</span> Durante las fechas de inscripciones o entregas de documentos, ¿cómo percibes la atención?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q4" value="Critica" required><span>Muy lenta, se hacen filas y hay retrasos</span></label>
-          <label class="option-item"><input type="radio" name="q4" value="Lenta"><span>Un poco demorada, pero se resuelve</span></label>
-          <label class="option-item"><input type="radio" name="q4" value="Agil"><span>Rápida y organizada</span></label>
+      <!-- Formulario -->
+      <form class="form-body" id="encuestaForm">
+
+        <!-- SECCIÓN 1 -->
+        <div class="question-section-title">Sección I: Situación Actual de los Trámites</div>
+
+        <div class="question-card">
+          <h3><span class="question-number">1.</span> ¿Cómo consideras que la institución maneja y guarda actualmente la información de los alumnos?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q1" value="Fisico" required><span>En carpetas físicas y archiveros de papel</span></label>
+            <label class="option-item"><input type="radio" name="q1" value="Excel"><span>En archivos de Excel o documentos guardados en la computadora</span></label>
+            <label class="option-item"><input type="radio" name="q1" value="Hibrido"><span>Combinan carpetas físicas con archivos de Excel</span></label>
+            <label class="option-item"><input type="radio" name="q1" value="Desconocido"><span>No sé el método exacto, pero los trámites suelen tardar</span></label>
+          </div>
         </div>
-      </div>
 
-      <!-- SECCIÓN 2 -->
-      <div class="question-section-title">Sección II: Problemas y Riesgos Detectados</div>
-
-      <div class="question-card">
-        <h3><span class="question-number">5.</span> ¿Has notado algún error en tus datos registrados (como nombres mal escritos, materias o calificaciones)?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q5" value="Frecuente" required><span>Sí, me ha pasado o lo he visto seguido</span></label>
-          <label class="option-item"><input type="radio" name="q5" value="RaraVez"><span>Solo alguna vez me llegó a pasar</span></label>
-          <label class="option-item"><input type="radio" name="q5" value="Nunca"><span>Nunca me ha tocado un error</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">2.</span> ¿Por qué medio sueles solicitar o consultar información sobre trámites escolares?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q2" value="Ventanilla" required><span>Acudiendo directamente a la ventanilla o área de control escolar</span></label>
+            <label class="option-item"><input type="radio" name="q2" value="Correo"><span>Por correo electrónico</span></label>
+            <label class="option-item"><input type="radio" name="q2" value="Mensajeria"><span>Por mensaje o grupos informales</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">6.</span> Si los registros se llevan en papel o en Excel, ¿cuál crees que es el mayor riesgo?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q6" value="Perdida" required><span>Que se pierdan o traspapelen documentos importantes</span></label>
-          <label class="option-item"><input type="radio" name="q6" value="AccesoNoAutorizado"><span>Que alguien modifique o borre información sin querer</span></label>
-          <label class="option-item"><input type="radio" name="q6" value="DanoFisico"><span>Que se dañen las hojas o se falle la computadora donde está guardado</span></label>
-          <label class="option-item"><input type="radio" name="q6" value="Duplicidad"><span>Que haya información duplicada o desactualizada</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">3.</span> En promedio, ¿cuánto tiempo toma obtener una respuesta cuando pides una constancia o consulta de datos?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q3" value="Inmediato" required><span>Al momento (menos de 15 minutos)</span></label>
+            <label class="option-item"><input type="radio" name="q3" value="MismoDia"><span>Unas cuantas horas en el mismo día</span></label>
+            <label class="option-item"><input type="radio" name="q3" value="Dias"><span>De 2 a 5 días</span></label>
+            <label class="option-item"><input type="radio" name="q3" value="Semanas"><span>Más de una semana</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">7.</span> ¿Qué tan fácil crees que sea buscar el expediente de un alumno que estudió hace varios años?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q7" value="MuyDificil" required><span>Complicado, deben buscar carpeta por carpeta en físico</span></label>
-          <label class="option-item"><input type="radio" name="q7" value="Moderado"><span>Aceptable, si es que lo tienen anotado en la computadora</span></label>
-          <label class="option-item"><input type="radio" name="q7" value="Facil"><span>Muy fácil y rápido</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">4.</span> Durante las fechas de inscripciones o entregas de documentos, ¿cómo percibes la atención?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q4" value="Critica" required><span>Muy lenta, se hacen filas y hay retrasos</span></label>
+            <label class="option-item"><input type="radio" name="q4" value="Lenta"><span>Un poco demorada, pero se resuelve</span></label>
+            <label class="option-item"><input type="radio" name="q4" value="Agil"><span>Rápida y organizada</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">8.</span> ¿Crees que exista un control claro sobre quién puede entrar a cambiar o editar los datos de los alumnos?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q8" value="No" required><span>No, parece que cualquiera con acceso al equipo puede editar</span></label>
-          <label class="option-item"><input type="radio" name="q8" value="Parcial"><span>A veces, con contraseñas básicas</span></label>
-          <label class="option-item"><input type="radio" name="q8" value="Si"><span>Sí, hay un control riguroso de usuarios y permisos</span></label>
+        <!-- SECCIÓN 2 -->
+        <div class="question-section-title">Sección II: Problemas y Riesgos Detectados</div>
+
+        <div class="question-card">
+          <h3><span class="question-number">5.</span> ¿Has notado algún error en tus datos registrados (como nombres mal escritos, materias o calificaciones)?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q5" value="Frecuente" required><span>Sí, me ha pasado o lo he visto seguido</span></label>
+            <label class="option-item"><input type="radio" name="q5" value="RaraVez"><span>Solo alguna vez me llegó a pasar</span></label>
+            <label class="option-item"><input type="radio" name="q5" value="Nunca"><span>Nunca me ha tocado un error</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">9.</span> Si la computadora de la oficina se dañara hoy, ¿crees que la información esté respaldada de forma segura?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q9" value="NoRespaldo" required><span>Probablemente no existan respaldos automáticos</span></label>
-          <label class="option-item"><input type="radio" name="q9" value="RespaldoManual"><span>Quizá tengan copias manuales en alguna memoria USB</span></label>
-          <label class="option-item"><input type="radio" name="q9" value="SiRespaldo"><span>Sí, de seguro cuentan con respaldos constantes</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">6.</span> Si los registros se llevan en papel o en Excel, ¿cuál crees que es el mayor riesgo?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q6" value="Perdida" required><span>Que se pierdan o traspapelen documentos importantes</span></label>
+            <label class="option-item"><input type="radio" name="q6" value="AccesoNoAutorizado"><span>Que alguien modifique o borre información sin querer</span></label>
+            <label class="option-item"><input type="radio" name="q6" value="DanoFisico"><span>Que se dañen las hojas o se falle la computadora donde está guardado</span></label>
+            <label class="option-item"><input type="radio" name="q6" value="Duplicidad"><span>Que haya información duplicada o desactualizada</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">10.</span> En general, ¿cómo calificarías la organización del área administrativa?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q10" value="Deficiente" required><span>Desorganizada, falta ordenar y centralizar los datos</span></label>
-          <label class="option-item"><input type="radio" name="q10" value="Regular"><span>Regular, funciona pero puede mejorar bastante</span></label>
-          <label class="option-item"><input type="radio" name="q10" value="Optimo"><span>Muy organizada e impecable</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">7.</span> ¿Qué tan fácil crees que sea buscar el expediente de un alumno que estudió hace varios años?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q7" value="MuyDificil" required><span>Complicado, deben buscar carpeta por carpeta en físico</span></label>
+            <label class="option-item"><input type="radio" name="q7" value="Moderado"><span>Aceptable, si es que lo tienen anotado en la computadora</span></label>
+            <label class="option-item"><input type="radio" name="q7" value="Facil"><span>Muy fácil y rápido</span></label>
+          </div>
         </div>
-      </div>
 
-      <!-- SECCIÓN 3 -->
-      <div class="question-section-title">Sección III: Análisis Operativo</div>
-
-      <div class="question-card">
-        <h3><span class="question-number">11.</span> ¿Qué tan importante consideras que es tener la información de los alumnos disponible al instante?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q11" value="Vital" required><span>Muy importante para no perder tiempo ni cometer errores</span></label>
-          <label class="option-item"><input type="radio" name="q11" value="Importante"><span>Es conveniente, pero se puede esperar</span></label>
-          <label class="option-item"><input type="radio" name="q11" value="Poco"><span>No me parece algo urgente</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">8.</span> ¿Crees que exista un control claro sobre quién puede entrar a cambiar o editar los datos de los alumnos?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q8" value="No" required><span>No, parece que cualquiera con acceso al equipo puede editar</span></label>
+            <label class="option-item"><input type="radio" name="q8" value="Parcial"><span>A veces, con contraseñas básicas</span></label>
+            <label class="option-item"><input type="radio" name="q8" value="Si"><span>Sí, hay un control riguroso de usuarios y permisos</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">12.</span> ¿Crees que la falta de un programa especializado genere carga extra de trabajo para el personal?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q12" value="Totalmente" required><span>Sí, trabajar todo manual o en Excel hace que se tarden más</span></label>
-          <label class="option-item"><input type="radio" name="q12" value="Parcialmente"><span>Un poco</span></label>
-          <label class="option-item"><input type="radio" name="q12" value="EnDesacuerdo"><span>No, el método actual está bien</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">9.</span> Si la computadora de la oficina se dañara hoy, ¿crees que la información esté respaldada de forma segura?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q9" value="NoRespaldo" required><span>Probablemente no existan respaldos automáticos</span></label>
+            <label class="option-item"><input type="radio" name="q9" value="RespaldoManual"><span>Quizá tengan copias manuales en alguna memoria USB</span></label>
+            <label class="option-item"><input type="radio" name="q9" value="SiRespaldo"><span>Sí, de seguro cuentan con respaldos constantes</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">13.</span> ¿Qué problema ves en usar hojas de Excel para guardar todos los registros escolares?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q13" value="Límite1" required><span>Cualquiera puede borrar una fórmula o celda sin querer</span></label>
-          <label class="option-item"><input type="radio" name="q13" value="Límite2"><span>Es difícil buscar rápido por matrícula cuando son muchos datos</span></label>
-          <label class="option-item"><input type="radio" name="q13" value="Límite3"><span>El archivo se puede trabar o corromper</span></label>
-          <label class="option-item"><input type="radio" name="q13" value="Todas"><span>Todas las anteriores</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">10.</span> En general, ¿cómo calificarías la organización del área administrativa?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q10" value="Deficiente" required><span>Desorganizada, falta ordenar y centralizar los datos</span></label>
+            <label class="option-item"><input type="radio" name="q10" value="Regular"><span>Regular, funciona pero puede mejorar bastante</span></label>
+            <label class="option-item"><input type="radio" name="q10" value="Optimo"><span>Muy organizada e impecable</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">14.</span> ¿Consideras que la imagen de la escuela mejora cuando sus procesos se ven modernos y digitales?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q14" value="SiAfecta" required><span>Sí, da mucha más confianza a alumnos y docentes</span></label>
-          <label class="option-item"><input type="radio" name="q14" value="PocoAfecta"><span>Afecta poco</span></label>
-          <label class="option-item"><input type="radio" name="q14" value="NoAfecta"><span>No hace diferencia</span></label>
+        <!-- SECCIÓN 3 -->
+        <div class="question-section-title">Sección III: Análisis Operativo</div>
+
+        <div class="question-card">
+          <h3><span class="question-number">11.</span> ¿Qué tan importante consideras que es tener la información de los alumnos disponible al instante?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q11" value="Vital" required><span>Muy importante para no perder tiempo ni cometer errores</span></label>
+            <label class="option-item"><input type="radio" name="q11" value="Importante"><span>Es conveniente, pero se puede esperar</span></label>
+            <label class="option-item"><input type="radio" name="q11" value="Poco"><span>No me parece algo urgente</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">15.</span> ¿Qué tan útil ves que el sistema funcione en la computadora de la oficina sin depender de internet?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q15" value="Esencial" required><span>Muy útil, así se puede seguir trabajando si falla el internet</span></label>
-          <label class="option-item"><input type="radio" name="q15" value="Deseable"><span>Útil, pero no indispensable</span></label>
-          <label class="option-item"><input type="radio" name="q15" value="Indiferente"><span>Me da igual</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">12.</span> ¿Crees que la falta de un programa especializado genere carga extra de trabajo para el personal?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q12" value="Totalmente" required><span>Sí, trabajar todo manual o en Excel hace que se tarden más</span></label>
+            <label class="option-item"><input type="radio" name="q12" value="Parcialmente"><span>Un poco</span></label>
+            <label class="option-item"><input type="radio" name="q12" value="EnDesacuerdo"><span>No, el método actual está bien</span></label>
+          </div>
         </div>
-      </div>
 
-      <!-- SECCIÓN 4 -->
-      <div class="question-section-title">Sección IV: Propuesta de Solución (Sistema de Escritorio)</div>
-
-      <div class="question-card">
-        <h3><span class="question-number">16.</span> ¿Ves conveniente que se desarrolle un programa de escritorio hecho a la medida para la escuela?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q16" value="Urgente" required><span>Sí, sería un cambio necesario y muy positivo</span></label>
-          <label class="option-item"><input type="radio" name="q16" value="Conveniente"><span>Estaría bien como una mejora</span></label>
-          <label class="option-item"><input type="radio" name="q16" value="Innecesario"><span>No lo considero necesario</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">13.</span> ¿Qué problema ves en usar hojas de Excel para guardar todos los registros escolares?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q13" value="Límite1" required><span>Cualquiera puede borrar una fórmula o celda sin querer</span></label>
+            <label class="option-item"><input type="radio" name="q13" value="Límite2"><span>Es difícil buscar rápido por matrícula cuando son muchos datos</span></label>
+            <label class="option-item"><input type="radio" name="q13" value="Límite3"><span>El archivo se puede trabar o corromper</span></label>
+            <label class="option-item"><input type="radio" name="q13" value="Todas"><span>Todas las anteriores</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">17.</span> ¿Qué función valorarías más dentro de un nuevo programa para la administración de alumnos?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q17" value="Busqueda" required><span>Poder buscar a un alumno por matrícula o nombre en un segundo</span></label>
-          <label class="option-item"><input type="radio" name="q17" value="Seguridad"><span>Que la información quede guardada de forma segura en una base de datos</span></label>
-          <label class="option-item"><input type="radio" name="q17" value="Reportes"><span>Poder generar reportes o historiales automáticamente</span></label>
-          <label class="option-item"><input type="radio" name="q17" value="Sencillez"><span>Que sea fácil de usar para cualquier persona</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">14.</span> ¿Consideras que la imagen de la escuela mejora cuando sus procesos se ven modernos y digitales?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q14" value="SiAfecta" required><span>Sí, da mucha más confianza a alumnos y docentes</span></label>
+            <label class="option-item"><input type="radio" name="q14" value="PocoAfecta"><span>Afecta poco</span></label>
+            <label class="option-item"><input type="radio" name="q14" value="NoAfecta"><span>No hace diferencia</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">18.</span> ¿Cómo te beneficiaría directamente a ti que la escuela tenga un programa así?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q18" value="Tiempo" required><span>Menos tiempo de espera al pedir información o documentos</span></label>
-          <label class="option-item"><input type="radio" name="q18" value="Certeza"><span>Mayor tranquilidad de que mis datos están bien guardados</span></label>
-          <label class="option-item"><input type="radio" name="q18" value="Trámites"><span>Trámites e inscripciones mucho más rápidos</span></label>
-          <label class="option-item"><input type="radio" name="q18" value="Todas"><span>Todas las anteriores</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">15.</span> ¿Qué tan útil ves que el sistema funcione en la computadora de la oficina sin depender de internet?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q15" value="Esencial" required><span>Muy útil, así se puede seguir trabajando si falla el internet</span></label>
+            <label class="option-item"><input type="radio" name="q15" value="Deseable"><span>Útil, pero no indispensable</span></label>
+            <label class="option-item"><input type="radio" name="q15" value="Indiferente"><span>Me da igual</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">19.</span> ¿Apoyarías que la institución adopte formalmente esta propuesta de software?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q19" value="SiTotalmente" required><span>Sí, totalmente</span></label>
-          <label class="option-item"><input type="radio" name="q19" value="Probablemente"><span>Probablemente</span></label>
-          <label class="option-item"><input type="radio" name="q19" value="No"><span>No</span></label>
+        <!-- SECCIÓN 4 -->
+        <div class="question-section-title">Sección IV: Propuesta de Solución (Sistema de Escritorio)</div>
+
+        <div class="question-card">
+          <h3><span class="question-number">16.</span> ¿Ves conveniente que se desarrolle un programa de escritorio hecho a la medida para la escuela?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q16" value="Urgente" required><span>Sí, sería un cambio necesario y muy positivo</span></label>
+            <label class="option-item"><input type="radio" name="q16" value="Conveniente"><span>Estaría bien como una mejora</span></label>
+            <label class="option-item"><input type="radio" name="q16" value="Innecesario"><span>No lo considero necesario</span></label>
+          </div>
         </div>
-      </div>
 
-      <div class="question-card">
-        <h3><span class="question-number">20.</span> ¿Qué tan satisfecho quedarías si los trámites escolares se resolvieran mucho más rápido gracias al sistema?</h3>
-        <div class="options-group">
-          <label class="option-item"><input type="radio" name="q20" value="MuyAlto" required><span>Muy satisfecho</span></label>
-          <label class="option-item"><input type="radio" name="q20" value="Alto"><span>Satisfecho</span></label>
-          <label class="option-item"><input type="radio" name="q20" value="Neutral"><span>Me daría igual</span></label>
+        <div class="question-card">
+          <h3><span class="question-number">17.</span> ¿Qué función valorarías más dentro de un nuevo programa para la administración de alumnos?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q17" value="Busqueda" required><span>Poder buscar a un alumno por matrícula o nombre en un segundo</span></label>
+            <label class="option-item"><input type="radio" name="q17" value="Seguridad"><span>Que la información quede guardada de forma segura en una base de datos</span></label>
+            <label class="option-item"><input type="radio" name="q17" value="Reportes"><span>Poder generar reportes o historiales automáticamente</span></label>
+            <label class="option-item"><input type="radio" name="q17" value="Sencillez"><span>Que sea fácil de usar para cualquier persona</span></label>
+          </div>
         </div>
-      </div>
 
-      <!-- Aviso de Privacidad -->
-      <div class="privacy-card">
-        <h4>Aviso de Privacidad y Consentimiento Informado[cite: 2]</h4>
-        <p>En cumplimiento con la Ley Federal de Protección de Datos Personales, se informa que este cuestionario es totalmente anónimo y confidencial[cite: 2]. La información recopilada se utilizará exclusivamente para el análisis y fundamentación de un proyecto académico.</p>
-        <label class="option-item" style="background: transparent; border: none; padding: 0;">
-          <input type="checkbox" id="consentimiento" name="consentimiento" required>
-          <span>Acepto participar voluntariamente en esta encuesta[cite: 2].</span>
-        </label>
-      </div>
+        <div class="question-card">
+          <h3><span class="question-number">18.</span> ¿Cómo te beneficiaría directamente a ti que la escuela tenga un programa así?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q18" value="Tiempo" required><span>Menos tiempo de espera al pedir información o documentos</span></label>
+            <label class="option-item"><input type="radio" name="q18" value="Certeza"><span>Mayor tranquilidad de que mis datos están bien guardados</span></label>
+            <label class="option-item"><input type="radio" name="q18" value="Trámites"><span>Trámites e inscripciones mucho más rápidos</span></label>
+            <label class="option-item"><input type="radio" name="q18" value="Todas"><span>Todas las anteriores</span></label>
+          </div>
+        </div>
 
-      <!-- Botón de Envío -->
-      <button type="submit" class="submit-btn">
-        <span>Enviar Respuestas</span>
-      </button>
+        <div class="question-card">
+          <h3><span class="question-number">19.</span> ¿Apoyarías que la institución adopte formalmente esta propuesta de software?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q19" value="SiTotalmente" required><span>Sí, totalmente</span></label>
+            <label class="option-item"><input type="radio" name="q19" value="Probablemente"><span>Probablemente</span></label>
+            <label class="option-item"><input type="radio" name="q19" value="No"><span>No</span></label>
+          </div>
+        </div>
 
-    </form>
+        <div class="question-card">
+          <h3><span class="question-number">20.</span> ¿Qué tan satisfecho quedarías si los trámites escolares se resolvieran mucho más rápido gracias al sistema?</h3>
+          <div class="options-group">
+            <label class="option-item"><input type="radio" name="q20" value="MuyAlto" required><span>Muy satisfecho</span></label>
+            <label class="option-item"><input type="radio" name="q20" value="Alto"><span>Satisfecho</span></label>
+            <label class="option-item"><input type="radio" name="q20" value="Neutral"><span>Me daría igual</span></label>
+          </div>
+        </div>
+
+        <!-- Aviso de Privacidad -->
+        <div class="privacy-card">
+          <h4>Aviso de Privacidad y Consentimiento Informado</h4>
+          <p>En cumplimiento con la Ley Federal de Protección de Datos Personales, se informa que este cuestionario es totalmente anónimo y confidencial. La información recopilada se utilizará exclusivamente para el análisis y fundamentación de un proyecto académico.</p>
+          <label class="option-item" style="background: transparent; border: none; padding: 0;">
+            <input type="checkbox" id="consentimiento" name="consentimiento" value="Aceptado" required>
+            <span>Acepto participar voluntariamente en esta encuesta.</span>
+          </label>
+        </div>
+
+        <!-- Botón de Envío -->
+        <button type="submit" class="submit-btn" id="btnSubmit">
+          <span>Enviar Respuestas</span>
+        </button>
+
+      </form>
+    </div>
     
-    <p class="footer-text">Proyecto de Investigación e Innovación Tecnológica © 2026</p>
+    <p class="footer-text">Universidad Tecnológica de Durango • Proyecto de Innovación Tecnológica © 2026</p>
   </div>
 
   <script>
-    // ⚠️ REEMPLAZA ESTA URL CON LA QUE TE DIO GOOGLE APPS SCRIPT
+    // ⚠️ COLOCA AQUÍ TU URL DE GOOGLE APPS SCRIPT
     const SCRIPT_URL = 'AQUÍ_PEGA_TU_URL_DE_APPS_SCRIPT';
 
     const form = document.getElementById('encuestaForm');
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
-    const submitBtn = form.querySelector('.submit-btn');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const surveyContainer = document.getElementById('surveyContainer');
+    const thankYouCard = document.getElementById('thankYouCard');
     const totalQuestions = 20;
 
-    // Actualizar barra de progreso al contestar
+    // Actualizar barra de progreso
     form.addEventListener('change', () => {
       let answeredCount = 0;
       for (let i = 1; i <= totalQuestions; i++) {
@@ -278,38 +300,53 @@
       progressText.textContent = percentage + '%';
     });
 
-    // Enviar datos a Google Sheets
+    // Enviar datos a Google Sheets y mostrar pantalla final
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      // Deshabilitar botón durante el envío
-      submitBtn.disabled = true;
-      submitBtn.innerText = 'Enviando respuestas...';
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = '<span>Guardando en la base de datos...</span>';
 
       const formData = new FormData(form);
 
+      // Usamos no-cors para evitar bloqueos de redirección de Google
       fetch(SCRIPT_URL, {
         method: 'POST',
-        body: formData
+        body: formData,
+        mode: 'no-cors'
       })
-      .then(response => {
-        alert('¡Gracias! Tus respuestas han sido guardadas correctamente en la base de datos.');
-        form.reset();
-        progressBar.style.width = '0%';
-        progressText.textContent = '0%';
-        
-        // Limpiar estilos de respondido
-        form.querySelectorAll('.question-card').forEach(card => card.classList.remove('answered'));
+      .then(() => {
+        // Mostrar tarjeta de agradecimiento
+        surveyContainer.style.display = 'none';
+        thankYouCard.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       })
       .catch(error => {
-        alert('Hubo un inconveniente al enviar tus respuestas. Por favor, inténtalo de nuevo.');
+        alert('Ocurrió un detalle al guardar las respuestas. Por favor revisa la conexión.');
         console.error('Error:', error);
       })
       .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>Enviar Respuestas</span>';
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<span>Enviar Respuestas</span>';
       });
     });
+
+    // Función para reiniciar y responder otra encuesta
+    function resetFormulario() {
+      form.reset();
+      progressBar.style.width = '0%';
+      progressText.textContent = '0%';
+      form.querySelectorAll('.question-card').forEach(card => card.classList.remove('answered'));
+      
+      thankYouCard.style.display = 'none';
+      surveyContainer.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Función para finalizar
+    function finalizarSesion() {
+      alert('¡Gracias por concluir! Puedes cerrar esta ventana.');
+    }
   </script>
 </body>
 </html>
